@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.suelaine.cursomc2.DTO.CategoriaDTO;
 import com.suelaine.cursomc2.domain.Categoria;
+import com.suelaine.cursomc2.domain.Cliente;
 import com.suelaine.cursomc2.repositories.CategoriaRepository;
 import com.suelaine.cursomc2.services.exceptions.DataIntegrityException2;
 import com.suelaine.cursomc2.services.exceptions.ObjectNotFoundException;
@@ -52,8 +53,9 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj,obj);
+		return repo.save(newObj);
 
 	}
 	
@@ -81,6 +83,10 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(),objDto.getNome());
+	}
+	
+	private void updateData(Categoria newObj, Categoria obj){
+		newObj.setNome(obj.getNome());	
 	}
 
 }
